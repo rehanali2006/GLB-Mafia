@@ -1,0 +1,145 @@
+<% layout('layouts/boilerplate') %>
+
+<link rel="stylesheet" href="/css/new.css">
+
+<div class="container mt-4 pb-5">
+  <div class="form-card mx-auto">
+
+    <div class="form-card-header">
+      <div class="form-icon">➕</div>
+      <h3>Add New Resource</h3>
+      <p>Share notes, assignments, or question papers with your batch</p>
+    </div>
+
+    <form action="/new" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label">📅 Year</label>
+          <select name="year" id="yearSelect" class="form-select" required>
+            <option value="">Select Year</option>
+            <option>First</option>
+            <option>Second</option>
+            <option>Third</option>
+            <option>Fourth</option>
+          </select>
+          <div class="invalid-feedback">Please select a year</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">🏛️ Branch</label>
+          <select name="branch" class="form-select" required>
+            <option value="">Select Branch</option>
+            <option>CSE</option>
+            <option>CSAIML</option>
+            <option>ECE</option>
+            <option>CSEAI</option>
+            <option>IT</option>
+            <option>ME</option>
+            <option>CSDS</option>
+            <option>AIDS</option>
+            <option>CSH</option>
+            <option>EEE</option>
+          </select>
+          <div class="invalid-feedback">Please select a branch</div>
+        </div>
+
+        <div class="col-md-6" id="sectionWrapper" style="display:none;">
+          <label class="form-label">🔤 Section</label>
+          <select name="section" id="sectionSelect" class="form-select">
+            <option value="">Select Section</option>
+            <% for(let i = 65; i <= 90; i++) { %>
+              <option value="<%= String.fromCharCode(i) %>"><%= String.fromCharCode(i) %></option>
+            <% } %>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">📚 Subject</label>
+          <select name="subject" class="form-select" required>
+            <option value="">Select Subject</option>
+            <% Object.keys(aktuSubjects).forEach(yr => { %>
+              <optgroup label="<%= yr %> Year">
+                <% aktuSubjects[yr].forEach(sub => { %>
+                  <option value="<%= sub %>"><%= sub %></option>
+                <% }) %>
+              </optgroup>
+            <% }) %>
+          </select>
+          <div class="invalid-feedback">Please select a subject</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">📂 Type</label>
+          <select name="type" class="form-select" required>
+            <option value="">Select Type</option>
+            <option>Assignment</option>
+            <option>Notes</option>
+            <option>Paper</option>
+          </select>
+          <div class="invalid-feedback">Please select a resource type</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">📖 Unit</label>
+          <select name="title" class="form-select" required>
+            <option value="">Select Unit</option>
+            <option>Unit 1</option>
+            <option>Unit 2</option>
+            <option>Unit 3</option>
+            <option>Unit 4</option>
+            <option>Unit 5</option>
+          </select>
+          <div class="invalid-feedback">Please select a unit</div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">📂 Upload PDF</label>
+          <input type="file" name="file" class="form-control" accept="application/pdf" required>
+          <small class="text-muted">Only PDF files are allowed</small>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-glb-primary px-5 py-2">
+          Upload Resource
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<script>
+  const yearSelect = document.getElementById('yearSelect');
+  const sectionWrapper = document.getElementById('sectionWrapper');
+  const sectionSelect = document.getElementById('sectionSelect');
+
+  function toggleSection() {
+    if (yearSelect.value === 'First') {
+      sectionWrapper.style.display = 'block';
+      sectionSelect.required = true;
+    } else {
+      sectionWrapper.style.display = 'none';
+      sectionSelect.required = false;
+      sectionSelect.value = '';
+    }
+  }
+
+  yearSelect.addEventListener('change', toggleSection);
+
+  // 🔥 PDF VALIDATION
+  const fileInput = document.querySelector('input[name="file"]');
+
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+
+    if (file && file.type !== "application/pdf") {
+      alert("Only PDF files are allowed!");
+      fileInput.value = "";
+    }
+  });
+</script>

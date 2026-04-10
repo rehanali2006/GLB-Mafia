@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/units.css">
+
+<div class="container mt-5 pb-5">
+
+  <div class="text-center mb-5">
+    <h2 class="page-heading">📗 <%= subject %></h2>
+    <p class="page-sub"><%= year %> · <%= branch %> · <span class="badge-type-sm"><%= type %></span></p>
+  </div>
+
+  <div class="row g-3 justify-content-center">
+    <% for(let i = 1; i <= 5; i++) { %>
+      <div class="col-6 col-md-4 col-lg-3">
+        <a href="/home/<%= year %>/<%= branch %>/show?type=<%= type %>&subject=<%= encodeURIComponent(subject) %>&unit=Unit%20<%= i %><%= section ? '&section='+section : '' %>"
+           class="unit-card">
+          <div class="unit-number"><%= i %></div>
+          <p>Unit <%= i %></p>
+        </a>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="/home/<%= year %>/<%= branch %>/type?type=<%= type %><%= section ? '&section='+section : '' %>" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+  </div>
+
+</div>

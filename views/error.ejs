@@ -1,0 +1,47 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5 pb-5 text-center">
+  <div class="error-card mx-auto">
+    <div class="error-code"><%= status || 500 %></div>
+    <h2 class="error-title">
+      <% if(status === 404) { %>
+        Page Not Found 🔍
+      <% } else if(status === 403) { %>
+        Access Denied 🚫
+      <% } else { %>
+        Something Went Wrong 😵
+      <% } %>
+    </h2>
+    <p class="error-msg"><%= message || 'An unexpected error occurred.' %></p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
+      <a href="/" class="btn btn-glb-primary px-4 py-2">
+        <i class="bi bi-house-door me-2"></i>Go Home
+      </a>
+      <a href="javascript:history.back()" class="btn btn-outline-secondary px-4 py-2">
+        <i class="bi bi-arrow-left me-1"></i>Go Back
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+.error-card {
+  max-width: 480px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 48px 32px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.09);
+}
+.error-code {
+  font-size: 6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #302b63, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.error-title { font-weight: 700; font-size: 1.4rem; margin-bottom: 8px; }
+.error-msg   { color: #888; font-size: 0.95rem; }
+</style>
