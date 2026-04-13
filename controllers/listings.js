@@ -3,10 +3,7 @@ const User = require("../models/user");
 const aktuSubjects = require("../utils/aktuSubjects");
 const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
-<<<<<<< HEAD
 const { cloudinary } = require("../cloudConfig");
-=======
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 
 module.exports.home = (req, res) => {
   res.render("home");
@@ -79,7 +76,7 @@ function getFileUrl(file) {
 
 module.exports.createListing = wrapAsync(async (req, res) => {
   if (!req.file) {
-    req.flash("error", "Please upload a PDF file");
+    req.flash("error", "Please upload a file");
     return res.redirect("/new");
   }
 
@@ -135,39 +132,30 @@ module.exports.updateListing = wrapAsync(async (req, res) => {
   res.redirect(`/resource/${id}`);
 });
 
-<<<<<<< HEAD
-=======
-const { cloudinary } = require("../cloudConfig");
-
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 module.exports.deleteListing = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const listing = await Listing.findById(id);
+
   if (!listing) {
     req.flash("error", "Resource not found");
     return res.redirect("/");
   }
-<<<<<<< HEAD
 
   if (listing.file && listing.file.filename) {
-    // Determine resource_type from the stored URL so both old (image) and new (raw) files delete correctly
     const storedUrl = listing.file.url || "";
+
+    // ✅ detect type automatically
     const resType = storedUrl.includes("/image/upload/") ? "image" : "raw";
+
     try {
-      await cloudinary.uploader.destroy(listing.file.filename, { resource_type: resType });
-    } catch (e) {
-      console.error("Cloudinary delete error:", e.message);
-      // Non-fatal — still delete the DB record
+      await cloudinary.uploader.destroy(listing.file.filename, {
+        resource_type: resType,
+      });
+    } catch (err) {
+      console.error("Cloudinary delete error:", err.message);
     }
   }
 
-=======
-  if (listing.file && listing.file.filename) {
-    await cloudinary.uploader.destroy(listing.file.filename, {
-      resource_type: "raw"
-    });
-  }
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
   await Listing.findByIdAndDelete(id);
   req.flash("success", "Resource deleted successfully 🗑️");
   res.redirect("/");

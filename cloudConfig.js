@@ -9,28 +9,26 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-<<<<<<< HEAD
   params: async (req, file) => {
     const isPDF = file.mimetype === "application/pdf";
 
     return {
       folder: "GLB_MAFIA",
-
-      // ✅ CRITICAL FIX
       resource_type: isPDF ? "raw" : "auto",
 
       allowed_formats: [
-        "pdf", "png", "jpg", "jpeg",
-        "doc", "docx", "ppt", "pptx"
+        "pdf",
+        "png",
+        "jpg",
+        "jpeg",
+        "doc",
+        "docx",
+        "ppt",
+        "pptx",
       ],
 
       public_id: Date.now() + "-" + file.originalname,
     };
-=======
-  params: {
-    folder: "GLB_MAFIA",
-    resource_type: "auto", 
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
   },
 });
 

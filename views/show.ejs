@@ -5,12 +5,7 @@
 <style>
 .preview-thumb {
   width: 100%;
-<<<<<<< HEAD
   height: 180px;
-=======
-  height: 160px;
-  object-fit: cover;
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
   border-radius: 10px;
   border: 1px solid #e0e0e0;
   background: #f5f5f5;
@@ -22,11 +17,7 @@
 }
 .preview-placeholder {
   width: 100%;
-<<<<<<< HEAD
   height: 180px;
-=======
-  height: 160px;
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
   border-radius: 10px;
   background: linear-gradient(135deg, #ffeaea 0%, #fff0f0 100%);
   display: flex;
@@ -34,13 +25,6 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #f5c6c6;
-<<<<<<< HEAD
-=======
-  transition: transform 0.2s ease;
-}
-.preview-placeholder:hover {
-  transform: scale(1.02);
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 }
 </style>
 
@@ -57,7 +41,6 @@
       <div class="col-md-6 col-lg-4">
         <div class="resource-card p-3 text-center">
 
-<<<<<<< HEAD
           <!-- 🔍 PREVIEW -->
           <a href="/resource/<%= item._id %>" style="text-decoration:none; color:inherit;">
             <% if (item.file && item.file.url) { %>
@@ -80,7 +63,7 @@
 
               <% } else { %>
 
-                <!-- ✅ OTHER FILES -->
+                <!-- 📄 OTHER FILE -->
                 <div class="preview-placeholder">
                   <i class="bi bi-file-earmark" style="font-size:40px;"></i>
                   <p class="mt-1 small text-muted">Preview not available</p>
@@ -96,55 +79,11 @@
                 <p class="mt-1 small text-muted">No file</p>
               </div>
 
-=======
-          <!-- 📄 PREVIEW THUMBNAIL -->
-          <a href="/resource/<%= item._id %>" style="text-decoration:none; color:inherit;">
-            <% if (item.file && item.file.url) { %>
-              <%
-                // Generate Cloudinary thumbnail from the raw PDF
-                // Cloudinary raw PDFs: replace /raw/upload/ with /image/upload/ and append .jpg
-                // Also add transformation for first-page thumbnail
-                let thumbUrl = null;
-                const rawUrl = item.file.url;
-                if (rawUrl && rawUrl.includes('cloudinary.com')) {
-                  // Convert raw PDF URL to image thumbnail URL (first page)
-                  thumbUrl = rawUrl
-                    .replace('/raw/upload/', '/image/upload/w_400,h_220,c_fill,pg_1,q_70,f_jpg/')
-                    .replace(/\.pdf$/i, '.jpg');
-                }
-              %>
-              <% if (thumbUrl) { %>
-                <img
-                  src="<%= thumbUrl %>"
-                  alt="<%= item.title %> preview"
-                  class="preview-thumb mb-2"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                />
-                <div class="preview-placeholder mb-2" style="display:none;">
-                  <i class="bi bi-file-earmark-pdf" style="font-size:50px; color:#e53935;"></i>
-                  <p class="mt-1 mb-0 small fw-semibold text-muted">Open Assignment</p>
-                </div>
-              <% } else { %>
-                <div class="preview-placeholder mb-2">
-                  <i class="bi bi-file-earmark-pdf" style="font-size:50px; color:#e53935;"></i>
-                  <p class="mt-1 mb-0 small fw-semibold text-muted">Open Assignment</p>
-                </div>
-              <% } %>
-            <% } else { %>
-              <div class="preview-placeholder mb-2">
-                <i class="bi bi-file-earmark" style="font-size:50px; color:#aaa;"></i>
-                <p class="mt-1 mb-0 small text-muted">No file</p>
-              </div>
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
             <% } %>
           </a>
 
           <!-- 📌 TITLE -->
-<<<<<<< HEAD
           <h6 class="mt-2 mb-2"><%= item.title %></h6>
-=======
-          <h6 class="mb-2"><%= item.title %></h6>
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 
           <!-- 📌 META -->
           <p class="mb-1">
@@ -154,11 +93,7 @@
             <%= item.subject %> · <%= item.year %> Year
           </p>
 
-<<<<<<< HEAD
           <!-- 👤 USER -->
-=======
-          <!-- 👤 UPLOADED BY -->
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
           <p class="small mb-1">
             <i class="bi bi-person-circle me-1"></i>
             <%= item.owner?.username || "Unknown" %>
@@ -170,11 +105,7 @@
             <%= item.views %> views
           </p>
 
-<<<<<<< HEAD
           <!-- 🔗 BUTTON -->
-=======
-          <!-- 🔗 OPEN BUTTON -->
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
           <a href="/resource/<%= item._id %>" class="btn btn-glb-primary btn-sm w-100">
             <i class="bi bi-eye me-2"></i>View Resource
           </a>
@@ -184,8 +115,4 @@
     <% }) %>
   </div>
 
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
