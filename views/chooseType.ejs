@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/chooseType.css">
+
+<div class="container mt-5 pb-5" style="max-width:600px;">
+
+  <div class="text-center mb-5">
+    <h2 class="page-heading">📂 <%= year %> Year · <%= branch %></h2>
+    <% if(section) { %><p class="page-sub">Section <%= section %></p><% } %>
+    <p class="page-sub">What type of resource are you looking for?</p>
+  </div>
+
+  <div class="d-flex flex-column gap-3">
+
+    <a href="/home/<%= year %>/<%= branch %>/type?type=Assignment<%= section ? '&section='+section : '' %>" class="type-card">
+      <div class="type-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">📝</div>
+      <div class="type-info">
+        <h5>Assignments</h5>
+        <p>Chapter-wise assignment PDFs</p>
+      </div>
+      <i class="bi bi-chevron-right type-arrow"></i>
+    </a>
+
+    <a href="/home/<%= year %>/<%= branch %>/type?type=Notes<%= section ? '&section='+section : '' %>" class="type-card">
+      <div class="type-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">📖</div>
+      <div class="type-info">
+        <h5>Notes</h5>
+        <p>Handwritten & digital notes</p>
+      </div>
+      <i class="bi bi-chevron-right type-arrow"></i>
+    </a>
+
+    <a href="/home/<%= year %>/<%= branch %>/type?type=Paper<%= section ? '&section='+section : '' %>" class="type-card">
+      <div class="type-icon" style="background:linear-gradient(135deg,#10b981,#059669);">📄</div>
+      <div class="type-info">
+        <h5>Question Papers</h5>
+        <p>Previous year & model papers</p>
+      </div>
+      <i class="bi bi-chevron-right type-arrow"></i>
+    </a>
+
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="<%= year === 'First' ? '/home?year=First' : '/' %>" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+  </div>
+
+</div>

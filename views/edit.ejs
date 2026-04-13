@@ -1,0 +1,150 @@
+<% layout('layouts/boilerplate') %>
+
+<link rel="stylesheet" href="/css/new.css">
+
+<div class="container mt-4 pb-5">
+  <div class="form-card mx-auto">
+
+```
+<div class="form-card-header">
+  <div class="form-icon">✏️</div>
+  <h3>Edit Resource</h3>
+  <p>Update the details of this resource</p>
+</div>
+
+<form action="/edit/<%= currResource._id %>?_method=PUT" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+  <div class="row g-3">
+
+    <div class="col-md-6">
+      <label class="form-label">📅 Year</label>
+      <select name="year" id="yearSelect" class="form-select" required>
+        <option value="">Select Year</option>
+        <% ['First','Second','Third','Fourth'].forEach(y => { %>
+          <option value="<%= y %>" <%= currResource.year === y ? 'selected' : '' %>><%= y %></option>
+        <% }) %>
+      </select>
+      <div class="invalid-feedback">Please select a year</div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">🏛️ Branch</label>
+      <select name="branch" class="form-select" required>
+        <option value="">Select Branch</option>
+        <% ['CSE','CSAIML','ECE','CSEAI','IT','ME','CSDS','AIDS','CSH','EEE'].forEach(b => { %>
+          <option value="<%= b %>" <%= currResource.branch === b ? 'selected' : '' %>><%= b %></option>
+        <% }) %>
+      </select>
+      <div class="invalid-feedback">Please select a branch</div>
+    </div>
+
+    <div class="col-md-6" id="sectionWrapper">
+      <label class="form-label">🔤 Section</label>
+      <select name="section" id="sectionSelect" class="form-select">
+        <option value="">Select Section</option>
+        <% for(let i = 65; i <= 90; i++) { %>
+          <option value="<%= String.fromCharCode(i) %>" <%= currResource.section === String.fromCharCode(i) ? 'selected' : '' %>>
+            <%= String.fromCharCode(i) %>
+          </option>
+        <% } %>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">📚 Subject</label>
+      <select name="subject" class="form-select" required>
+        <option value="">Select Subject</option>
+        <% Object.keys(aktuSubjects).forEach(yr => { %>
+          <optgroup label="<%= yr %> Year">
+            <% aktuSubjects[yr].forEach(sub => { %>
+              <option value="<%= sub %>" <%= currResource.subject === sub ? 'selected' : '' %>><%= sub %></option>
+            <% }) %>
+          </optgroup>
+        <% }) %>
+      </select>
+      <div class="invalid-feedback">Please select a subject</div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">📂 Type</label>
+      <select name="type" class="form-select" required>
+        <option value="">Select Type</option>
+        <% ['Assignment','Notes','Paper'].forEach(t => { %>
+          <option value="<%= t %>" <%= currResource.type === t ? 'selected' : '' %>><%= t %></option>
+        <% }) %>
+      </select>
+      <div class="invalid-feedback">Please select a type</div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">📖 Unit</label>
+      <select name="title" class="form-select" required>
+        <option value="">Select Unit</option>
+        <% ['Unit 1','Unit 2','Unit 3','Unit 4','Unit 5'].forEach(u => { %>
+          <option value="<%= u %>" <%= currResource.title === u ? 'selected' : '' %>><%= u %></option>
+        <% }) %>
+      </select>
+      <div class="invalid-feedback">Please select a unit</div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">📂 Upload File</label>
+      <input type="file" name="file" class="form-control">
+      <small class="text-muted">Upload PDF, notes, or assignment</small>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">🖼️ Image URL</label>
+    </div>
+
+  </div>
+
+  <div class="img-preview-wrap mt-3">
+    
+  </div>
+
+  <div class="mt-3 text-center">
+    <% if(currResource.file && currResource.file.url) { %>
+      <a href="<%= currResource.file.url %>" target="_blank" class="btn btn-outline-primary">
+        📄 View Current File
+      </a>
+    <% } %>
+  </div>
+
+  <div class="d-flex gap-3 justify-content-center mt-4">
+    <button type="submit" class="btn btn-glb-primary">Update</button>
+    <a href="javascript:history.back()" class="btn btn-outline-secondary">Cancel</a>
+  </div>
+
+</form>
+```
+
+  </div>
+</div>
+
+<script>
+  const yearSelect = document.getElementById('yearSelect');
+  const sectionWrapper = document.getElementById('sectionWrapper');
+  const sectionSelect = document.getElementById('sectionSelect');
+
+  function toggleSection() {
+    if (yearSelect.value === 'First') {
+      sectionWrapper.style.display = 'block';
+      sectionSelect.required = true;
+    } else {
+      sectionWrapper.style.display = 'none';
+      sectionSelect.required = false;
+      sectionSelect.value = '';
+    }
+  }
+
+  toggleSection();
+  yearSelect.addEventListener('change', toggleSection);
+
+  const imageInput = document.getElementById('imageInput');
+  const previewImg = document.getElementById('previewImg');
+
+  imageInput.addEventListener('input', () => {
+    previewImg.src = imageInput.value || previewImg.src;
+  });
+</script>

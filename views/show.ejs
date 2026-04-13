@@ -1,0 +1,118 @@
+<% layout('layouts/boilerplate') %>
+
+<link rel="stylesheet" href="/css/resource.css">
+
+<style>
+.preview-thumb {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  background: #f5f5f5;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.preview-thumb:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.preview-placeholder {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ffeaea 0%, #fff0f0 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f5c6c6;
+}
+</style>
+
+<div class="container mt-4 pb-5">
+
+  <% if (data.length === 0) { %>
+    <div class="text-center mt-5">
+      <h4>No resources found 😕</h4>
+    </div>
+  <% } %>
+
+  <div class="row g-4">
+    <% data.forEach(item => { %>
+      <div class="col-md-6 col-lg-4">
+        <div class="resource-card p-3 text-center">
+
+          <!-- 🔍 PREVIEW -->
+          <a href="/resource/<%= item._id %>" style="text-decoration:none; color:inherit;">
+            <% if (item.file && item.file.url) { %>
+
+              <% const url = item.file.url; %>
+
+              <% if (url.endsWith(".pdf")) { %>
+
+                <!-- ✅ PDF PREVIEW -->
+                <iframe 
+                  src="https://docs.google.com/gview?url=<%= url %>&embedded=true"
+                  class="preview-thumb"
+                  style="border:none;">
+                </iframe>
+
+              <% } else if (url.match(/\.(jpg|jpeg|png)$/)) { %>
+
+                <!-- ✅ IMAGE PREVIEW -->
+                <img src="<%= url %>" class="preview-thumb" />
+
+              <% } else { %>
+
+                <!-- ✅ OTHER FILES -->
+                <div class="preview-placeholder">
+                  <i class="bi bi-file-earmark" style="font-size:40px;"></i>
+                  <p class="mt-1 small text-muted">Preview not available</p>
+                </div>
+
+              <% } %>
+
+            <% } else { %>
+
+              <!-- ❌ NO FILE -->
+              <div class="preview-placeholder">
+                <i class="bi bi-file-earmark" style="font-size:40px;"></i>
+                <p class="mt-1 small text-muted">No file</p>
+              </div>
+
+            <% } %>
+          </a>
+
+          <!-- 📌 TITLE -->
+          <h6 class="mt-2 mb-2"><%= item.title %></h6>
+
+          <!-- 📌 META -->
+          <p class="mb-1">
+            <span class="badge bg-primary"><%= item.type %></span>
+          </p>
+          <p class="text-muted small mb-2">
+            <%= item.subject %> · <%= item.year %> Year
+          </p>
+
+          <!-- 👤 USER -->
+          <p class="small mb-1">
+            <i class="bi bi-person-circle me-1"></i>
+            <%= item.owner?.username || "Unknown" %>
+          </p>
+
+          <!-- 👁️ VIEWS -->
+          <p class="small text-muted mb-3">
+            <i class="bi bi-eye me-1"></i>
+            <%= item.views %> views
+          </p>
+
+          <!-- 🔗 BUTTON -->
+          <a href="/resource/<%= item._id %>" class="btn btn-glb-primary btn-sm w-100">
+            <i class="bi bi-eye me-2"></i>View Resource
+          </a>
+
+        </div>
+      </div>
+    <% }) %>
+  </div>
+
+</div>

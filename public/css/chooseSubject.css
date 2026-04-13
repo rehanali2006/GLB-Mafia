@@ -1,0 +1,49 @@
+.badge-type {
+  background: linear-gradient(135deg, #302b63, #7c3aed);
+  color: #fff;
+  border-radius: 20px;
+  padding: 3px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.subject-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 10px 14px;
+  border-radius: 16px;
+  background: #fff;
+  text-decoration: none;
+  color: #1a1a2e;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  min-height: 90px;
+  text-align: center;
+}
+
+.subject-card:hover {
+  border-color: #7c3aed;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.18);
+  color: #302b63;
+}
+
+.subject-number {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #7c3aed;
+  background: #ede9fe;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.subject-card p {
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
