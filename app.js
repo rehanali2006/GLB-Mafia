@@ -21,30 +21,22 @@ const authRouter = require("./routes/auth");
 const MONGO_URL = process.env.MONGO_URL;
 
 if (!MONGO_URL) {
-  console.error(" MONGO_URL is not defined in environment variables!");
+  console.error("MONGO_URL is not defined in environment variables!");
   process.exit(1);
 }
 
 mongoose
   .connect(MONGO_URL)
-<<<<<<< HEAD
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
-=======
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
-<<<<<<< HEAD
-=======
 
-// CORS: allow comma-separated origins from env, fallback to localhost for dev
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
+// CORS setup
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
   : ["http://localhost:3000"];
@@ -52,11 +44,6 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 app.use(
   cors({
     origin: function (origin, callback) {
-<<<<<<< HEAD
-      
-=======
-      // Allow requests with no origin (mobile apps, curl, same-origin)
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -87,13 +74,18 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     },
   })
 );
 
 app.use(flash());
 app.use(loadUser);
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -113,14 +105,6 @@ app.use((err, req, res, next) => {
   res.status(status).render("error", { message, status });
 });
 
-<<<<<<< HEAD
-app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    next();
-});
-
-=======
->>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 GLB Mafia server running on port ${PORT}`);
