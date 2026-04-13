@@ -9,6 +9,7 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
+<<<<<<< HEAD
   params: async (req, file) => {
     const isPDF = file.mimetype === "application/pdf";
 
@@ -25,6 +26,11 @@ const storage = new CloudinaryStorage({
 
       public_id: Date.now() + "-" + file.originalname,
     };
+=======
+  params: {
+    folder: "GLB_MAFIA",
+    resource_type: "auto", 
+>>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
   },
 });
 

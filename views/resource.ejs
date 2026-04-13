@@ -1,5 +1,6 @@
 <% layout('layouts/boilerplate') %>
 
+<<<<<<< HEAD
 <div class="container mt-4">
 
   <h3><%= item.title %></h3>
@@ -29,4 +30,66 @@
     <p>No file found</p>
   <% } %>
 
+=======
+<link rel="stylesheet" href="/css/resource.css">
+
+<div class="container mt-4 pb-5">
+  <div class="resource-viewer">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h4><%= item.title %></h4>
+        <p>
+          <span class="badge bg-primary"><%= item.type %></span>
+          <span class="text-muted"><%= item.subject %> · <%= item.year %></span>
+        </p>
+        <p>
+          Uploaded by <strong><%= item.owner?.username %></strong>
+        </p>
+      </div>
+
+      <div>
+        👁️ <%= item.views %> views
+      </div>
+    </div>
+
+    <!-- PDF VIEW -->
+    <% if(item.file && item.file.url) { %>
+      <div id="pdf-container" style="width:100%; height:600px; border:1px solid #ddd; border-radius:8px; overflow:hidden; background:#f5f5f5;">
+        <iframe 
+          id="pdf-iframe"
+          src="https://docs.google.com/viewer?url=<%= encodeURIComponent(item.file.url) %>&embedded=true"
+          width="100%" 
+          height="100%"
+          style="border:none;"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p class="text-muted mt-1" style="font-size:0.8rem;">
+        If the preview doesn't load, 
+        <a href="<%= item.file.url %>" target="_blank">click here to open the PDF directly</a>.
+      </p>
+    <% } %>
+
+    <!-- DOWNLOAD -->
+    <div class="mt-3">
+      <a 
+        href="<%= item.file.url %>?fl_attachment=<%= (item.title + '_' + item.subject + '_' + item.type).replace(/ /g, '_') %>.pdf"
+        class="btn btn-glb-primary w-100"
+      >
+        Download PDF
+      </a>
+    </div>
+
+    <!-- DELETE BUTTON -->
+    <% if(currentUser && (currentUser.role === 'admin' || String(item.owner?._id) === String(currentUser._id))) { %>
+      <form action="/delete/<%= item._id %>?_method=DELETE" method="POST" class="mt-3">
+        <button class="btn btn-danger w-100" onclick="return confirm('Delete this resource?')">
+          Delete Resource
+        </button>
+      </form>
+    <% } %>
+
+  </div>
+>>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 </div>

@@ -3,7 +3,10 @@ const User = require("../models/user");
 const aktuSubjects = require("../utils/aktuSubjects");
 const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
+<<<<<<< HEAD
 const { cloudinary } = require("../cloudConfig");
+=======
+>>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 
 module.exports.home = (req, res) => {
   res.render("home");
@@ -132,6 +135,11 @@ module.exports.updateListing = wrapAsync(async (req, res) => {
   res.redirect(`/resource/${id}`);
 });
 
+<<<<<<< HEAD
+=======
+const { cloudinary } = require("../cloudConfig");
+
+>>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
 module.exports.deleteListing = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const listing = await Listing.findById(id);
@@ -139,6 +147,7 @@ module.exports.deleteListing = wrapAsync(async (req, res) => {
     req.flash("error", "Resource not found");
     return res.redirect("/");
   }
+<<<<<<< HEAD
 
   if (listing.file && listing.file.filename) {
     // Determine resource_type from the stored URL so both old (image) and new (raw) files delete correctly
@@ -152,6 +161,13 @@ module.exports.deleteListing = wrapAsync(async (req, res) => {
     }
   }
 
+=======
+  if (listing.file && listing.file.filename) {
+    await cloudinary.uploader.destroy(listing.file.filename, {
+      resource_type: "raw"
+    });
+  }
+>>>>>>> d8613dbed0f7b47af0d6e3c01e44b8f82ced0b96
   await Listing.findByIdAndDelete(id);
   req.flash("success", "Resource deleted successfully 🗑️");
   res.redirect("/");
