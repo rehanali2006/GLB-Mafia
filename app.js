@@ -21,14 +21,14 @@ const authRouter = require("./routes/auth");
 const MONGO_URL = process.env.MONGO_URL;
 
 if (!MONGO_URL) {
-  console.error("MONGO_URL is not defined in environment variables!");
-  process.exit(1);
+  console.error("MONGO_URL is not defined!");
 }
 
+// ✅ Mongo connect (no exit in serverless)
 mongoose
   .connect(MONGO_URL)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .catch((err) => console.error("MongoDB error:", err));
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -36,7 +36,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// CORS setup
+// CORS
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
   : ["http://localhost:3000"];
@@ -59,22 +59,21 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 
+// Session
 const sessionStore = MongoStore.create({
   mongoUrl: MONGO_URL,
   collectionName: "sessions",
-  ttl: 7 * 24 * 60 * 60,
 });
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "glbmafia_secret_change_in_prod",
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: true, // Vercel needs secure cookies
     },
   })
 );
@@ -82,30 +81,28 @@ app.use(
 app.use(flash());
 app.use(loadUser);
 
+// Global locals
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  next();
-});
-
-app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
+// Routes
 app.use("/auth", authRouter);
 app.use("/", listingsRouter);
 
+// 404
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
 
+// Error handler
 app.use((err, req, res, next) => {
   const { status = 500, message = "Something went wrong" } = err;
   res.status(status).render("error", { message, status });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 GLB Mafia server running on port ${PORT}`);
-});
+// ✅ IMPORTANT → EXPORT (NO app.listen)
+module.exports = app;
