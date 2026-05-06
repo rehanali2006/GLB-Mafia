@@ -17,7 +17,7 @@ const ExpressError = require("./utils/ExpressError");
 
 const listingsRouter = require("./routes/listings");
 const authRouter = require("./routes/auth");
-
+//connection
 const MONGO_URL = process.env.MONGO_URL;
 
 if (!MONGO_URL) {
