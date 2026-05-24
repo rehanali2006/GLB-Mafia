@@ -1,0 +1,78 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/home.css">
+
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="hero-content">
+    <div class="hero-badge">🎓 GLB Institute Resources</div>
+    <h1 class="hero-title">GLB <span class="gradient-text">Mafia</span></h1>
+    <p class="hero-sub">Your ultimate hub for notes, assignments & question papers.</p>
+    <% if (!currentUser) { %>
+      <div class="d-flex gap-3 justify-content-center flex-wrap mt-3">
+        <a href="/auth/signup" class="btn btn-glb-primary px-4 py-2">
+          <i class="bi bi-rocket-takeoff me-2"></i>Get Started
+        </a>
+        <a href="/auth/login" class="btn btn-outline-dark px-4 py-2">
+          <i class="bi bi-box-arrow-in-right me-2"></i>Login
+        </a>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<!-- Year Selection -->
+<div class="container pb-5">
+  <div class="text-center mb-4">
+    <h2 class="page-heading">Select Your Year</h2>
+    <p class="page-sub">Choose your year to access resources</p>
+  </div>
+
+  <div class="row g-4 justify-content-center">
+
+    <!-- First Year -->
+    <div class="col-6 col-md-3">
+      <a href="/home?year=First" class="glb-card year-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Qs8GMndijgA8VW41V6OgzROkqk9gwzOtuQ&s" alt="First Year">
+        <p>First Year</p>
+        <span class="year-badge">Class Based</span>
+      </a>
+    </div>
+
+    <!-- Second Year -->
+    <div class="col-6 col-md-3">
+      <a href="/home?year=Second" class="glb-card year-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/8068/8068070.png" alt="Second Year">
+        <p>Second Year</p>
+        <span class="year-badge">Branch Based</span>
+      </a>
+    </div>
+
+    <!-- Third Year -->
+    <div class="col-6 col-md-3">
+      <a href="/home?year=Third" class="glb-card year-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXdOddV3OgOEduL3rae3Jn2j7UCRmTjQc2rw&s" alt="Third Year">
+        <p>Third Year</p>
+        <span class="year-badge">Branch Based</span>
+      </a>
+    </div>
+
+    <!-- Fourth Year -->
+    <div class="col-6 col-md-3">
+      <a href="/home?year=Fourth" class="glb-card year-card">
+        <img src="https://cdn-icons-png.freepik.com/512/8068/8068178.png" alt="Fourth Year">
+        <p>Fourth Year</p>
+        <span class="year-badge">Branch Based</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Add Resource CTA (only for logged-in users) -->
+  <% if (currentUser) { %>
+  <div class="text-center mt-5">
+    <a href="/new" class="btn btn-glb-primary px-5 py-2">
+      <i class="bi bi-plus-circle me-2"></i>Add a Resource
+    </a>
+  </div>
+  <% } %>
+</div>

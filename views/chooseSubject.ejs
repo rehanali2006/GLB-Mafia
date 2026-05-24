@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/chooseSubject.css">
+
+<div class="container mt-5 pb-5">
+
+  <div class="text-center mb-5">
+    <h2 class="page-heading">📘 <%= year %> · <%= branch %></h2>
+    <p class="page-sub"><span class="badge-type"><%= type %></span> · Select a Subject</p>
+  </div>
+
+  <div class="row g-3 justify-content-center">
+    <% currentSubjects.forEach((subject, idx) => { %>
+      <div class="col-6 col-md-4 col-lg-3">
+        <a href="/home/<%= year %>/<%= branch %>/units?type=<%= type %>&subject=<%= encodeURIComponent(subject) %><%= section ? '&section='+section : '' %>"
+           class="subject-card">
+          <span class="subject-number"><%= String(idx+1).padStart(2,'0') %></span>
+          <p><%= subject %></p>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="/home/<%= year %>/<%= branch %>?<%= section ? 'section='+section : '' %>" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+  </div>
+
+</div>
